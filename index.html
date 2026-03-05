@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meu Diário de Treino – Neon Fit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* PALETA: nossa + brilho da referência */
+    :root {
+      --bg-main: #020308;
+      --bg-shell: #050509;
+      --bg-card: #090c13;
+      --bg-card-alt: #131827;
+      --bg-soft: #111827;
+
+      --accent: #22c55e;
+      --accent-soft: rgba(34,197,94,0.16);
+      --accent-strong: #16a34a;
+
+      --accent-mustard: #eab308;
+      --accent-mustard-soft: rgba(234,179,8,0.22);
+      --accent-terracota: #f97316;
+
+      --accent-neon: #d4ff37;
+      --accent-neon-soft: rgba(212,255,55,0.20);
+
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #020617 0, #000 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1120px;
+      margin: 8px;
+      background: linear-gradient(160deg, #050509 0%, #020309 100%);
+      border-radius: 26px;
+      border: 1px solid #111827;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+
+    .app-header {
+      padding: 14px 18px 10px;
+      border-bottom: 1px solid #111827;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.22), transparent 55%),
+        radial-gradient(circle at top right, rgba(234,179,8,0.22), transparent 55%);
+    }
+
+    .app-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .app-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      max-width: 480px;
+    }
+
+    .badge-streak {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(5,7,12,0.96);
+      border-radius: 999px;
+      padding: 4px 11px;
+      border: 1px solid rgba(212,255,55,0.65);
+      font-size: 10px;
+      color: #fefce8;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(212,255,55,0.5);
+    }
+
+    .flame {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      border: 2px solid var(--accent-neon);
+      box-shadow: 0 0 14px rgba(212,255,55,0.9);
+      position: relative;
+    }
+    .flame::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent-neon) 0, #3f6212 70%);
+    }
+
+    /* LAYOUT PRINCIPAL */
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 1.45fr 1.55fr;
+      min-height: 520px;
+    }
+    @media (max-width: 900px) {
+      .app-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .left-col {
+      border-right: 1px solid #111827;
+      background: radial-gradient(circle at top left, #090b10 0, #050609 65%);
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 900px) {
+      .left-col {
+        border-right: none;
+        border-bottom: 1px solid #111827;
+      }
+    }
+
+    /* TOGGLE SEMANAL/MENSAL */
+
+    .view-tabs {
+      padding: 8px 12px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-group {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #05070b;
+      border: 1px solid #242b3a;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(9,9,11,0.8);
+    }
+
+    .toggle-btn {
+      padding: 5px 12px;
+      font-size: 11px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent-soft);
+      color: #f9ffe6;
+      text-shadow: 0 0 8px rgba(34,197,94,0.7);
+    }
+
+    /* BOTÕES NAVEGAÇÃO */
+
+    .btn-nav {
+      border-radius: 999px;
+      border: 1px solid #262b3c;
+      background: linear-gradient(135deg, #020617, #050814);
+      color: var(--text);
+      padding: 4px 9px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .btn-nav:hover {
+      border-color: rgba(34,197,94,0.9);
+      box-shadow: 0 0 12px rgba(34,197,94,0.5);
+      transform: translateY(-0.5px);
+    }
+
+    /* SEMANA */
+
+    .week-header {
+      padding: 4px 12px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .week-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .week-strip {
+      padding: 4px 8px 8px;
+      overflow-x: auto;
+    }
+
+    .week-days {
+      display: flex;
+      gap: 6px;
+      min-width: 100%;
+    }
+
+    .day-card {
+      flex: 0 0 calc(100%/7 - 4px);
+      min-width: 0;
+    }
+
+    .day-button {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(31,41,55,1);
+      background: radial-gradient(circle at top, #111827, #03050d);
+      color: #e5e7eb;
+      padding: 6px 6px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+    }
+
+    .day-button:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(34,197,94,0.55);
+      transform: translateY(-1px);
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 3px;
+    }
+
+    .day-weekday {
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .day-number {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .day-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .tag {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: #020617;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tag-a { border-color: rgba(34,197,94,0.9); color: #bbf7d0; }
+    .tag-b { border-color: rgba(59,130,246,0.9); color: #bfdbfe; }
+    .tag-c { border-color: rgba(236,72,153,0.9); color: #f9a8d4; }
+    .tag-off { border-color: rgba(75,85,99,0.95); color: #e5e7eb; }
+    .tag-abs { border-color: rgba(234,179,8,0.95); color: #fef9c3; }
+
+    .day-weight {
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .day-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      box-shadow: 0 0 0 1px #020617, 0 0 8px rgba(34,197,94,0.8);
+    }
+
+    .today-ring {
+      position: absolute;
+      inset: -1px;
+      border-radius: 14px;
+      border: 1px solid rgba(248,250,252,0.9);
+      box-shadow: 0 0 9px rgba(248,250,252,0.6);
+      pointer-events: none;
+    }
+
+    /* MÊS */
+
+    .month-view {
+      padding: 4px 10px 8px;
+      display: none;
+    }
+
+    .month-header {
+      padding: 4px 2px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .month-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .month-grid {
+      margin-top: 4px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .month-weekday {
+      font-size: 9px;
+      text-align: center;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .month-day {
+      aspect-ratio: 1/1;
+      border-radius: 10px;
+      border: 1px solid #111827;
+      background: #020308;
+      font-size: 11px;
+      color: #e5e7eb;
+      padding: 3px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.15s;
+    }
+
+    .month-day:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(34,197,94,0.55);
+    }
+
+    .month-day-empty {
+      border-color: transparent;
+      background: transparent;
+      cursor: default;
+    }
+
+    .month-day-number {
+      text-align: right;
+      font-size: 10px;
+    }
+
+    .month-day-tags {
+      font-size: 9px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+    }
+
+    /* EXPORT */
+
+    .export-area {
+      margin-top: 5px;
+      border-radius: 12px;
+      border: 1px solid #111827;
+      background: #020617;
+      padding: 6px;
+    }
+
+    .export-area label {
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .export-text {
+      width: 100%;
+      margin-top: 4px;
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 8px;
+      border: 1px solid #1f2933;
+      background: #020308;
+      color: #e5e7eb;
+      font-size: 10px;
+      padding: 6px;
+    }
+
+    .btn-copy {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 10px;
+      padding: 3px 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-copy:hover {
+      border-color: var(--accent-mustard);
+      box-shadow: 0 0 8px rgba(234,179,8,0.45);
+    }
+
+    .export-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(234,179,8,0.95);
+      background: var(--accent-mustard-soft);
+      color: #fef9c3;
+      font-size: 10px;
+      padding: 3px 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      box-shadow: 0 0 8px rgba(234,179,8,0.6);
+    }
+    .export-btn:hover {
+      background: rgba(234,179,8,0.3);
+    }
+
+    /* TABS / FICHAS */
+
+    .tabs {
+      padding: 6px 10px 8px;
+      border-top: 1px solid #111827;
+      background: radial-gradient(circle at bottom left, #020308 0, #050609 60%);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tab-buttons {
+      display: inline-flex;
+      background: rgba(10,16,27,0.96);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid #242b3a;
+      gap: 3px;
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.8);
+    }
+
+    .tab-btn {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--accent-soft);
+      color: #dcfce7;
+    }
+
+    .tab-content {
+      flex: 1;
+      border-radius: 14px;
+      border: 1px solid #1f2933;
+      background: var(--bg-card);
+      padding: 8px 8px;
+      overflow-y: auto;
+    }
+
+    .tab-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .tab-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-small {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(55,65,81,1);
+      color: var(--muted);
+    }
+
+    .card-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .train-card {
+      flex: 1 1 0;
+      border-radius: 12px;
+      border: 1px solid #1f2933;
+      background: radial-gradient(circle at top, #111827, #020308);
+      padding: 6px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: all 0.15s;
+    }
+
+    .train-card:hover {
+      border-color: rgba(148,163,184,0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.7);
+    }
+
+    .train-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.55);
+    }
+
+    .train-label {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .train-desc {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,1);
+      padding: 3px 7px;
+      font-size: 10px;
+      color: var(--muted);
+      background: rgba(10,14,23,0.95);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill:hover {
+      border-color: var(--accent);
+      color: #e5e7eb;
+      background: rgba(15,23,42,0.98);
+    }
+
+    .pill.active {
+      border-color: var(--accent-mustard);
+      background: var(--accent-mustard-soft);
+      color: #fef9c3;
+    }
+
+    .exercise-explain {
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px solid #1f2933;
+      font-size: 10.5px;
+      color: var(--muted);
+      min-height: 40px;
+    }
+
+    .exercise-explain-title {
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 2px;
+      font-size: 11px;
+    }
+
+    /* TIMER ABS – CÍRCULO + MODO FOCO */
+
+    .abs-timer {
+      margin-top: 8px;
+      border-radius: 14px;
+      border: 1px solid #1f2933;
+      background: radial-gradient(circle at top, #020617, #020308);
+      padding: 8px 9px;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .abs-timer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .abs-timer-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #e5e7eb;
+    }
+
+    .abs-timer-select {
+      background: #020617;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 3px 8px;
+      font-size: 10px;
+    }
+
+    .abs-timer-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    @media (max-width: 640px) {
+      .abs-timer-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .abs-timer-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .abs-timer-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .abs-timer-exercise {
+      font-size: 12px;
+      color: #f9fafb;
+      font-weight: 500;
+    }
+
+    .abs-timer-phase {
+      font-size: 10px;
+      color: #bbf7d0;
+    }
+
+    .abs-timer-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .abs-timer-circle {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .abs-timer-circle svg {
+      transform: rotate(-90deg);
+      overflow: visible;
+    }
+
+    .abs-timer-time-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      pointer-events: none;
+    }
+
+    .abs-timer-time-main {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 16px;
+      font-weight: 600;
+      color: #e5fce7;
+      text-shadow: 0 0 6px rgba(34,197,94,0.6);
+    }
+
+    .abs-timer-time-sub {
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .abs-timer-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .btn-timer {
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.9);
+      background: linear-gradient(135deg, rgba(34,197,94,0.25), rgba(21,128,61,0.35));
+      color: #dcfce7;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .btn-timer:hover {
+      box-shadow: 0 0 10px rgba(34,197,94,0.6);
+      transform: translateY(-0.5px);
+    }
+
+    .btn-timer-secondary {
+      border-color: rgba(148,163,184,0.9);
+      background: rgba(15,23,42,0.95);
+      color: #e5e7eb;
+    }
+
+    .abs-timer-next {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* MODO FOCO DO TIMER (quando ativo) */
+    .abs-timer.abs-timer-focus {
+      padding: 10px 10px;
+      border-width: 1px;
+      box-shadow: 0 0 18px rgba(34,197,94,0.4);
+    }
+
+    .abs-timer.abs-timer-focus .abs-timer-body {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+    @media (max-width: 640px) {
+      .abs-timer.abs-timer-focus .abs-timer-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .abs-timer.abs-timer-focus .abs-timer-circle {
+      width: 120px;
+      height: 120px;
+    }
+
+    .abs-timer.abs-timer-focus .abs-timer-time-main {
+      font-size: 22px;
+    }
+
+    .abs-timer.abs-timer-focus .abs-timer-exercise {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* quando timer ativo, deixar fichas menos destacadas */
+    .tab-content.abs-focus-active .card-row,
+    .tab-content.abs-focus-active #absPills,
+    .tab-content.abs-focus-active #absExplain {
+      opacity: 0.55;
+      filter: blur(0.3px);
+      transition: opacity 0.2s ease, filter 0.2s ease;
+    }
+
+    /* COLUNA DIREITA */
+
+    .right-col {
+      padding: 10px 12px 12px;
+      background:
+        radial-gradient(circle at top right, rgba(34,197,94,0.18), rgba(10,10,18,0.98)),
+        radial-gradient(circle at bottom right, rgba(234,88,12,0.16), transparent 55%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .placeholder-day {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .sidepanel-header {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .sidepanel-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .sidepanel-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    select, input[type="number"], textarea {
+      background: var(--bg-card-alt);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 9px;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+    }
+    select:focus, input[type="number"]:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.4);
+    }
+
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .summary-card {
+      margin-top: 4px;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid #1f2933;
+      background: rgba(10,14,23,0.98);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-label {
+      font-weight: 500;
+      color: #e5e7eb;
+      font-size: 11px;
+    }
+
+    .btn-save {
+      margin-top: 4px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-strong);
+      background: linear-gradient(135deg, var(--accent-soft), rgba(21,128,61,0.4));
+      color: #dcfce7;
+      font-size: 11px;
+      padding: 5px 11px;
+      cursor: pointer;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .btn-save:hover {
+      background: rgba(16,185,129,0.35);
+      box-shadow: 0 0 12px rgba(34,197,94,0.7);
+      transform: translateY(-0.5px);
+    }
+
+    .link {
+      font-size: 10px;
+      color: var(--accent-mustard);
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+
+    .footer-note {
+      margin-top: auto;
+      font-size: 10px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="app-header">
+    <div>
+      <div class="app-title">MEU DIÁRIO DE TREINO</div>
+      <div class="app-subtitle">
+        Calendário semanal/mensal, fichas A/B/C, ABS com timer 45/15 (som + foco) e export mensal. Tudo salvo só no seu dispositivo.
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
+      <div class="badge-streak">
+        <div class="flame"></div>
+        <span id="streakLabel">0 DIAS SEGUIDOS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <!-- COLUNA ESQUERDA -->
+    <div class="left-col">
+      <div class="view-tabs">
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-view="week">SEMANAL</button>
+          <button class="toggle-btn" data-view="month">MENSAL</button>
+        </div>
+      </div>
+
+      <!-- VISÃO SEMANAL -->
+      <div id="weekView">
+        <div class="week-header">
+          <div class="week-label" id="weekLabel">Semana</div>
+          <div style="display:flex; gap:4px;">
+            <button class="btn-nav" id="prevWeekBtn">&#8592;</button>
+            <button class="btn-nav" id="nextWeekBtn">&#8594;</button>
+          </div>
+        </div>
+        <div class="week-strip">
+          <div class="week-days" id="weekDays"></div>
+        </div>
+      </div>
+
+      <!-- VISÃO MENSAL -->
+      <div id="monthView" class="month-view">
+        <div class="month-header">
+          <div class="month-label" id="monthLabel">Mês</div>
+          <div style="display:flex; gap:4px; align-items:center;">
+            <button class="btn-nav" id="prevMonthBtn">&#8592;</button>
+            <button class="btn-nav" id="nextMonthBtn">&#8594;</button>
+            <button class="export-btn" id="exportMonthBtn">Exportar mês</button>
+          </div>
+        </div>
+        <div class="month-grid" id="monthGrid"></div>
+
+        <div class="export-area">
+          <label for="exportText">
+            Exportação do mês (fichas + registros)
+            <button class="btn-copy" id="copyExportBtn">Copiar</button>
+          </label>
+          <textarea id="exportText" class="export-text" placeholder="Clique em 'Exportar mês' para gerar o texto aqui."></textarea>
+        </div>
+      </div>
+
+      <!-- TABS TREINOS -->
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="musculacao">Musculação</button>
+          <button class="tab-btn" data-tab="abs">Abdominais</button>
+        </div>
+
+        <!-- TAB MUSCULAÇÃO -->
+        <div class="tab-content" id="tabMusculacao">
+          <div class="tab-header-row">
+            <div class="tab-title">Fichas A, B, C</div>
+            <span class="badge-small">Toque em um treino, depois nos exercícios</span>
+          </div>
+
+          <div class="card-row">
+            <div class="train-card" data-train="A">
+              <div class="train-label">Treino A</div>
+              <div class="train-desc">Peito + Tríceps</div>
+            </div>
+            <div class="train-card" data-train="B">
+              <div class="train-label">Treino B</div>
+              <div class="train-desc">Costas + Bíceps</div>
+            </div>
+            <div class="train-card" data-train="C">
+              <div class="train-label">Treino C</div>
+              <div class="train-desc">Ombro + Glúteos/Posterior</div>
+            </div>
+          </div>
+
+          <div id="musclePills" class="pill-list"></div>
+          <div id="muscleExplain" class="exercise-explain">
+            <div class="exercise-explain-title">Como fazer</div>
+            <div>Toque em um treino (A, B ou C) e depois em um exercício para ver a explicação rápida.</div>
+          </div>
+        </div>
+
+        <!-- TAB ABS -->
+        <div class="tab-content" id="tabAbs" style="display:none;">
+          <div class="tab-header-row">
+            <div class="tab-title">Sequências ABS (10 min)</div>
+            <span class="badge-small">45s exercício / 15s descanso</span>
+          </div>
+
+          <div class="card-row">
+            <div class="train-card" data-abs="ABS1">
+              <div class="train-label">ABS 1</div>
+              <div class="train-desc">Básico, base de core</div>
+            </div>
+            <div class="train-card" data-abs="ABS2">
+              <div class="train-label">ABS 2</div>
+              <div class="train-desc">Oblíquos / Cintura</div>
+            </div>
+            <div class="train-card" data-abs="ABS3">
+              <div class="train-label">ABS 3</div>
+              <div class="train-desc">Mais intenso / pranchas</div>
+            </div>
+          </div>
+
+          <div id="absPills" class="pill-list"></div>
+          <div id="absExplain" class="exercise-explain">
+            <div class="exercise-explain-title">Como fazer</div>
+            <div>Toque em ABS 1, 2 ou 3 e depois em um exercício para ver a explicação rápida.</div>
+          </div>
+
+          <!-- TIMER ABS -->
+          <div class="abs-timer" id="absTimerContainer">
+            <div class="abs-timer-header">
+              <div class="abs-timer-title">Timer ABS 45 / 15</div>
+              <select id="absTimerSelect" class="abs-timer-select">
+                <option value="ABS1">ABS 1 – Básico</option>
+                <option value="ABS2">ABS 2 – Oblíquos</option>
+                <option value="ABS3">ABS 3 – Intenso</option>
+              </select>
+            </div>
+
+            <div class="abs-timer-body">
+              <div class="abs-timer-main">
+                <div class="abs-timer-label" id="absTimerStatusLabel">Pronto para iniciar.</div>
+                <div class="abs-timer-exercise" id="absTimerExercise">
+                  Selecione a sequência e clique em INICIAR.
+                </div>
+                <div class="abs-timer-phase" id="absTimerPhase"></div>
+                <div class="abs-timer-next" id="absTimerNext">Próximo: —</div>
+              </div>
+
+              <div class="abs-timer-right">
+                <div class="abs-timer-circle" id="absTimerCircleWrapper">
+                  <svg viewBox="0 0 100 100">
+                    <defs>
+                      <linearGradient id="absCircleGradientExercise" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#bbf7d0" />
+                        <stop offset="100%" stop-color="#22c55e" />
+                      </linearGradient>
+                      <linearGradient id="absCircleGradientRest" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fef9c3" />
+                        <stop offset="100%" stop-color="#eab308" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="36" stroke="#020617" stroke-width="10" fill="none" />
+                    <circle id="absTimerCircleProgress"
+                            cx="50" cy="50" r="36"
+                            stroke="url(#absCircleGradientExercise)"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            fill="none"
+                            stroke-dasharray="226.19"
+                            stroke-dashoffset="226.19" />
+                  </svg>
+                  <div class="abs-timer-time-text">
+                    <div class="abs-timer-time-main" id="absTimerTime">00:00</div>
+                    <div class="abs-timer-time-sub" id="absTimerModeLabel">PRONTO</div>
+                  </div>
+                </div>
+
+                <div class="abs-timer-controls">
+                  <button class="btn-timer" id="absTimerStartBtn">INICIAR SEQUÊNCIA</button>
+                  <button class="btn-timer btn-timer-secondary" id="absTimerPauseBtn" disabled>PAUSAR</button>
+                  <button class="btn-timer btn-timer-secondary" id="absTimerStopBtn" disabled>PARAR</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <div class="right-col" id="rightCol">
+      <div class="sidepanel-header">
+        <div class="sidepanel-title" id="selectedDateLabel">Selecione um dia</div>
+        <div class="sidepanel-subtitle" id="selectedDayInfo">
+          Toque em um dia da semana ou do mês para registrar treino, ABS e peso.
+        </div>
+      </div>
+
+      <div id="dayForm" style="display:none;">
+        <div class="field">
+          <label for="treinoSelect">Treino de musculação</label>
+          <select id="treinoSelect">
+            <option value="">- Selecione -</option>
+            <option value="A">A – Peito + Tríceps</option>
+            <option value="B">B – Costas + Bíceps</option>
+            <option value="C">C – Ombro + Glúteos/Posterior</option>
+            <option value="Off">Off / Descanso</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="absSelect">Treino de abdominal</label>
+          <select id="absSelect">
+            <option value="">- Nenhum / Não fiz -</option>
+            <option value="ABS1">ABS 1 – Básico (10 min)</option>
+            <option value="ABS2">ABS 2 – Oblíquos</option>
+            <option value="ABS3">ABS 3 – Intenso</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="weightInput">Peso do dia (kg)</label>
+          <input type="number" step="0.1" id="weightInput" placeholder="Ex.: 80.2" />
+        </div>
+
+        <div class="field">
+          <label for="notesInput">Observações do dia</label>
+          <textarea id="notesInput" placeholder="Ex.: Supino 10kg/ lado x 9/8/7 reps, joelho ok, cansaço médio."></textarea>
+        </div>
+
+        <button class="btn-save" id="saveDayBtn">SALVAR DIA</button>
+
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="summary-label">Resumo do dia</span>
+            <span class="small" id="summaryDateMini"></span>
+          </div>
+          <div class="small" id="summaryTrain">
+            Nenhum treino selecionado ainda.
+          </div>
+          <div class="small" id="summaryAbs">
+            Nenhum ABS selecionado.
+          </div>
+          <div class="small" id="summaryWeight"></div>
+          <div class="small">
+            <span class="link" id="linkShowMuscle">Ver fichas A/B/C</span> ·
+            <span class="link" id="linkShowAbs">Ver fichas de ABS</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="placeholderDay" class="placeholder-day">
+        Assim que você tocar em um dia na visão semanal ou mensal, os campos de treino vão aparecer aqui para você preencher e salvar.
+      </div>
+
+      <div class="footer-note">
+        Dica: no fim de cada mês, use "Exportar mês" na visão Mensal para baixar o arquivo de texto.
+        Assim você cria um histórico anual seguro e pode me mandar pra análise.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* --- DADOS DE TREINO (iguais aos anteriores, resumidos por espaço) --- */
+  const musculacaoExercises = {
+    A: { name: "Treino A – Peito + Tríceps", items: [
+      { label: "Supino reto com barra", explain: "Deita no banco, pés firmes. Mãos um pouco mais largas que os ombros. Desce a barra na altura do peito médio e sobe estendendo sem travar o cotovelo." },
+      { label: "Supino inclinado com barra", explain: "Banco em 30–45°. Desce a barra na parte alta do peito, sentindo o peitoral superior. Mantém peito estufado, não deixa virar só ombro." },
+      { label: "Crucifixo na polia alta", explain: "Polias acima dos ombros. Tronco levemente inclinado. Puxa os cabos para baixo e para frente, encontrando as mãos à frente do quadril." },
+      { label: "Crucifixo na polia média", explain: "Polias na altura do peito. Abre os braços para os lados e fecha 'abraçando', focando em juntar o peito no meio." },
+      { label: "Bi-set: Tríceps na polia (barra)", explain: "Polia alta com barra. Cotovelos colados ao tronco, estende os braços para baixo, voltando controlado." },
+      { label: "Bi-set: Tríceps francês", explain: "Deitado, halter ou barra W acima do peito. Desce em direção à testa/atrás da cabeça e estende, mantendo cotovelos fixos." },
+      { label: "Tríceps corda na polia", explain: "Polia alta com corda. Empurra para baixo e abre a corda no final, contraindo o tríceps." }
+    ]},
+    B: { name: "Treino B – Costas + Bíceps", items: [
+      { label: "Puxada na frente (pegada aberta)", explain: "Barra alta, pegada mais aberta que os ombros. Puxa em direção ao queixo/peito alto, abrindo o peito." },
+      { label: "Remada baixa na polia", explain: "Sentado, puxa a barra/triângulo em direção ao umbigo, juntando escápulas." },
+      { label: "Remada unilateral com halter", explain: "Uma mão/joelho apoiados no banco. Puxa o halter ao lado do tronco, levando cotovelo para cima." },
+      { label: "Pulldown neutro / Pull-over", explain: "Polia alta, braços quase estendidos. Puxa de cima para baixo até perto das coxas, sentindo costas." },
+      { label: "Rosca direta barra W", explain: "Em pé, barra na frente com palmas para cima. Flexiona cotovelos, sem balançar o tronco." },
+      { label: "Rosca alternada com halteres", explain: "Alterna um braço de cada vez, girando a palma para cima na subida." },
+      { label: "Rosca martelo", explain: "Palmas voltadas uma para a outra, foco em bíceps + antebraço." }
+    ]},
+    C: { name: "Treino C – Ombro + Glúteos/Posterior", items: [
+      { label: "Desenvolvimento com halteres (sentado)", explain: "Sentado, halteres na altura dos ombros. Empurra acima da cabeça e volta até a linha dos ouvidos." },
+      { label: "Elevação lateral com halteres", explain: "Levanta os halteres para as laterais até a altura dos ombros, cotovelos levemente flexionados." },
+      { label: "Crucifixo inverso", explain: "Peck deck ou halteres, abre braços para trás focando manguito posterior." },
+      { label: "Mesa flexora", explain: "De bruços na máquina, flexiona joelhos trazendo calcanhares aos glúteos." },
+      { label: "Terra romeno", explain: "Barra/halter, joelhos levemente flexionados, quadril vai para trás, costas retas." },
+      { label: "Hip Thrust", explain: "Costas apoiadas, barra no quadril. Sobe empurrando pelos calcanhares, contraindo glúteos." },
+      { label: "Cadeira abdutora", explain: "Abre as pernas contra a resistência, sentindo glúteo lateral." },
+      { label: "Agachamento no Smith (leve)", explain: "Barra guiada, pés um pouco à frente. Desce até onde o joelho tolera, sobe controlado." }
+    ]}
+  };
+
+  const absExercises = {
+    ABS1: { name: "ABS 1 – Básico (10 min)", items: [
+      { label: "Dead bug (bicho morto)", explain: "Deitado, pernas a 90° e braços para cima. Estende uma perna e o braço oposto, mantendo lombar colada. Alterna." },
+      { label: "Prancha frontal básica", explain: "Antebraços e pés no chão, corpo em linha. Pode apoiar joelhos." },
+      { label: "Crunch curto", explain: "Deitado, joelhos dobrados. Eleva tronco até tirar escápulas do chão." },
+      { label: "Elevação de pernas dobradas", explain: "Deitado, joelhos dobrados. Eleva pernas e desce devagar, lombar colada." },
+      { label: "Prancha lateral esquerda", explain: "De lado, apoio no antebraço. Pode ser com joelhos ou pés." },
+      { label: "Prancha lateral direita", explain: "Mesmo do outro lado." },
+      { label: "Bicicleta no chão", explain: "Alterna joelho direito com cotovelo esquerdo e vice-versa." },
+      { label: "Toque nos calcanhares", explain: "Deitado, tronco levemente elevado. Alterna tocando calcanhares." },
+      { label: "Prancha com toques no ombro", explain: "Flexão alta, alterna tocar cada ombro com a mão oposta." },
+      { label: "Respiração diafragmática", explain: "Deitado, respira enchendo a barriga e soltando devagar, puxando umbigo para dentro." }
+    ]},
+    ABS2: { name: "ABS 2 – Oblíquos / Cintura", items: [
+      { label: "Prancha lateral dinâmica (esquerda)", explain: "Prancha lateral, sobe e desce levemente o quadril." },
+      { label: "Prancha lateral dinâmica (direita)", explain: "Mesmo do outro lado." },
+      { label: "Russian twist sem peso", explain: "Sentado, tronco levemente inclinado, gira para lados alternados." },
+      { label: "Mountain climber cruzado", explain: "Flexão alta, joelho direito no cotovelo esquerdo e vice-versa." },
+      { label: "Crunch perna cruzada (esquerda)", explain: "Perna direita cruzada, crunch girando em direção ao joelho direito." },
+      { label: "Crunch perna cruzada (direita)", explain: "Mesmo pro outro lado." },
+      { label: "Oblique crunch em pé (esquerda)", explain: "Em pé, joelho esquerdo sobe na lateral, cotovelo esquerdo desce em direção a ele." },
+      { label: "Oblique crunch em pé (direita)", explain: "Mesmo do outro lado." },
+      { label: "Prancha com rotação de quadril", explain: "Prancha de antebraço, gira quadril para um lado e outro." },
+      { label: "Alongamento em 'C'", explain: "Em pé/sentado, cruza mãos à frente e arredonda a parte alta das costas." }
+    ]},
+    ABS3: { name: "ABS 3 – Intenso / Pranchas", items: [
+      { label: "Prancha alta", explain: "Flexão alta, corpo em linha, core contraído." },
+      { label: "Hollow hold (barquinho)", explain: "Deitado, ombros e pernas elevados, lombar colada. Pode dobrar joelhos." },
+      { label: "Leg raise com pausa", explain: "Elevação de pernas com pausa perto do chão sem encostar." },
+      { label: "Prancha com elevação de perna", explain: "Prancha alta, alterna elevar uma perna." },
+      { label: "V-sit estático", explain: "Sentado, tronco para trás e pernas elevadas, formato de V." },
+      { label: "Bicicleta lenta", explain: "Bicicleta controlada, bem devagar." },
+      { label: "Prancha lateral perna elevada (esquerda)", explain: "Prancha lateral, eleva perna de cima." },
+      { label: "Prancha lateral perna elevada (direita)", explain: "Mesmo do outro lado." },
+      { label: "Plank walk", explain: "Sai de prancha de antebraço para alta apoiando mãos e volta." },
+      { label: "Respiração relaxando core", explain: "Respira fundo e solta devagar, relaxando abdômen e lombar." }
+    ]}
+  };
+
+  /* ELEMENTOS / ESTADO */
+
+  const weekLabel = document.getElementById("weekLabel");
+  const weekDaysContainer = document.getElementById("weekDays");
+  const prevWeekBtn = document.getElementById("prevWeekBtn");
+  const nextWeekBtn = document.getElementById("nextWeekBtn");
+
+  const monthLabel = document.getElementById("monthLabel");
+  const monthGrid = document.getElementById("monthGrid");
+  const prevMonthBtn = document.getElementById("prevMonthBtn");
+  const nextMonthBtn = document.getElementById("nextMonthBtn");
+  const exportMonthBtn = document.getElementById("exportMonthBtn");
+  const exportText = document.getElementById("exportText");
+  const copyExportBtn = document.getElementById("copyExportBtn");
+
+  const viewToggleBtns = document.querySelectorAll(".toggle-btn");
+  const weekView = document.getElementById("weekView");
+  const monthView = document.getElementById("monthView");
+
+  const streakLabel = document.getElementById("streakLabel");
+
+  const selectedDateLabel = document.getElementById("selectedDateLabel");
+  const selectedDayInfo = document.getElementById("selectedDayInfo");
+  const summaryDateMini = document.getElementById("summaryDateMini");
+  const summaryTrain = document.getElementById("summaryTrain");
+  const summaryAbs = document.getElementById("summaryAbs");
+  const summaryWeight = document.getElementById("summaryWeight");
+
+  const treinoSelect = document.getElementById("treinoSelect");
+  const absSelect = document.getElementById("absSelect");
+  const weightInput = document.getElementById("weightInput");
+  const notesInput = document.getElementById("notesInput");
+  const saveDayBtn = document.getElementById("saveDayBtn");
+
+  const placeholderDay = document.getElementById("placeholderDay");
+  const dayForm = document.getElementById("dayForm");
+
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabMusculacao = document.getElementById("tabMusculacao");
+  const tabAbs = document.getElementById("tabAbs");
+
+  const musclePills = document.getElementById("musclePills");
+  const muscleExplain = document.getElementById("muscleExplain");
+  const absPills = document.getElementById("absPills");
+  const absExplain = document.getElementById("absExplain");
+
+  const linkShowMuscle = document.getElementById("linkShowMuscle");
+  const linkShowAbs = document.getElementById("linkShowAbs");
+
+  // Timer ABS
+  const absTimerContainer = document.getElementById("absTimerContainer");
+  const absTimerSelect = document.getElementById("absTimerSelect");
+  const absTimerStatusLabel = document.getElementById("absTimerStatusLabel");
+  const absTimerExercise = document.getElementById("absTimerExercise");
+  const absTimerPhase = document.getElementById("absTimerPhase");
+  const absTimerNext = document.getElementById("absTimerNext");
+  const absTimerTime = document.getElementById("absTimerTime");
+  const absTimerModeLabel = document.getElementById("absTimerModeLabel");
+  const absTimerStartBtn = document.getElementById("absTimerStartBtn");
+  const absTimerPauseBtn = document.getElementById("absTimerPauseBtn");
+  const absTimerStopBtn = document.getElementById("absTimerStopBtn");
+  const absTimerCircleProgress = document.getElementById("absTimerCircleProgress");
+
+  let currentWeekStart;
+  let currentMonthDate;
+  let selectedDateKey = null;
+  let selectedDateObj = null;
+  let activeMuscleTrain = null;
+  let activeAbsTrain = null;
+
+  // Timer ABS state
+  let absTimerInterval = null;
+  let absTimerState = {
+    active: false,
+    paused: false,
+    currentSeqCode: "ABS1",
+    currentIndex: 0,
+    isExercise: true,
+    remaining: 0,
+    blockTotal: 0,
+    preCountdownActive: false,
+    preCountdownRemaining: 0
+  };
+
+  // Wake Lock (tela ligada)
+  let wakeLock = null;
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+          console.log('Wake Lock liberado');
+        });
+      }
+    } catch (err) {
+      console.log('Wake Lock não pôde ser ativado:', err);
+    }
+  }
+  function releaseWakeLock() {
+    try {
+      if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+      }
+    } catch (e) {}
+  }
+
+  // Som: único beep com volume graduado
+  const beepAudio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+  function playBeep(level) {
+    // level: 1 (50%), 2 (75%), 3 (100%)
+    let vol = level === 1 ? 0.5 : level === 2 ? 0.75 : 1.0;
+    beepAudio.volume = vol;
+    try {
+      beepAudio.currentTime = 0;
+      beepAudio.play();
+    } catch(e) {}
+  }
+
+  /* DATA HELPERS */
+
+  function startOfWeek(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1 - day);
+    d.setDate(d.getDate() + diff);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function startOfMonth(date) {
+    const d = new Date(date.getFullYear(), date.getMonth(), 1);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function formatDateKey(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2,"0");
+    const d = String(date.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+  }
+
+  function loadDayData(key) {
+    const raw = localStorage.getItem("treino-dia-" + key);
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+  }
+
+  function saveDayData(key, data) {
+    localStorage.setItem("treino-dia-" + key, JSON.stringify(data));
+    renderWeek();
+    renderMonth();
+    updateStreak();
+    if (selectedDateKey === key) updateSummary(data);
+  }
+
+  /* RENDER SEMANA */
+
+  function renderWeek() {
+    weekDaysContainer.innerHTML = "";
+    const start = new Date(currentWeekStart);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+
+    const options = { day: "2-digit", month: "2-digit" };
+    weekLabel.textContent =
+      `Semana ${start.toLocaleDateString("pt-BR", options)} – ${end.toLocaleDateString("pt-BR", options)}`;
+
+    const todayKey = formatDateKey(new Date());
+    const weekDayNames = ["SEG","TER","QUA","QUI","SEX","SÁB","DOM"];
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      const dateKey = formatDateKey(date);
+      const data = loadDayData(dateKey);
+
+      const dayCard = document.createElement("div");
+      dayCard.className = "day-card";
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "day-button";
+
+      const header = document.createElement("div");
+      header.className = "day-header";
+
+      const weekSpan = document.createElement("div");
+      weekSpan.className = "day-weekday";
+      weekSpan.textContent = weekDayNames[i];
+
+      const numSpan = document.createElement("div");
+      numSpan.className = "day-number";
+      numSpan.textContent = date.getDate();
+
+      header.appendChild(weekSpan);
+      header.appendChild(numSpan);
+
+      const tags = document.createElement("div");
+      tags.className = "day-tags";
+
+      if (data && data.treino) {
+        const t = document.createElement("span");
+        t.className = "tag";
+        if (data.treino === "A") t.classList.add("tag-a");
+        else if (data.treino === "B") t.classList.add("tag-b");
+        else if (data.treino === "C") t.classList.add("tag-c");
+        else if (data.treino === "Off") t.classList.add("tag-off");
+        t.textContent = data.treino === "Off" ? "Off" : `Treino ${data.treino}`;
+        tags.appendChild(t);
+      }
+
+      if (data && data.abs) {
+        const a = document.createElement("span");
+        a.className = "tag tag-abs";
+        a.textContent = data.abs;
+        tags.appendChild(a);
+      }
+
+      const weightDiv = document.createElement("div");
+      weightDiv.className = "day-weight";
+      if (data && data.weight) weightDiv.textContent = data.weight + " kg";
+
+      btn.appendChild(header);
+      if (tags.childNodes.length > 0) btn.appendChild(tags);
+      if (data && data.weight) btn.appendChild(weightDiv);
+
+      if (data && (data.treino || data.abs || data.weight || data.notes)) {
+        const dot = document.createElement("div");
+        dot.className = "day-dot";
+        btn.appendChild(dot);
+      }
+
+      if (dateKey === todayKey) {
+        const ring = document.createElement("div");
+        ring.className = "today-ring";
+        btn.appendChild(ring);
+      }
+
+      btn.addEventListener("click", () => selectDate(date));
+      dayCard.appendChild(btn);
+      weekDaysContainer.appendChild(dayCard);
+    }
+  }
+
+  /* RENDER MÊS */
+
+  function renderMonth() {
+    monthGrid.innerHTML = "";
+    const start = startOfMonth(currentMonthDate);
+    const year = start.getFullYear();
+    const month = start.getMonth();
+
+    const monthNames = [
+      "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+      "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    ];
+    monthLabel.textContent = `${monthNames[month]} de ${year}`;
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+
+    const weekdaysShort = ["D","S","T","Q","Q","S","S"];
+    weekdaysShort.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "month-weekday";
+      div.textContent = d;
+      monthGrid.appendChild(div);
+    });
+
+    for (let i = 0; i < startWeekday; i++) {
+      const empty = document.createElement("div");
+      empty.className = "month-day month-day-empty";
+      monthGrid.appendChild(empty);
+    }
+
+    const todayKey = formatDateKey(new Date());
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(year, month, d);
+      const key = formatDateKey(date);
+      const data = loadDayData(key);
+
+      const dayDiv = document.createElement("div");
+      dayDiv.className = "month-day";
+
+      const num = document.createElement("div");
+      num.className = "month-day-number";
+      num.textContent = d;
+
+      const tags = document.createElement("div");
+      tags.className = "month-day-tags";
+
+      if (data && data.treino) {
+        const t = document.createElement("span");
+        t.textContent = data.treino === "Off" ? "Off" : data.treino;
+        t.style.color =
+          data.treino === "A" ? "#bbf7d0" :
+          data.treino === "B" ? "#bfdbfe" :
+          data.treino === "C" ? "#f9a8d4" : "#e5e7eb";
+        tags.appendChild(t);
+      }
+
+      if (data && data.abs) {
+        const a = document.createElement("span");
+        a.textContent = data.abs;
+        a.style.color = "#fef9c3";
+        tags.appendChild(a);
+      }
+
+      dayDiv.appendChild(num);
+      dayDiv.appendChild(tags);
+
+      if (data && (data.treino || data.abs || data.weight || data.notes)) {
+        const dot = document.createElement("div");
+        dot.className = "day-dot";
+        dayDiv.appendChild(dot);
+      }
+
+      if (key === todayKey) {
+        dayDiv.style.boxShadow = "0 0 0 1px rgba(248,250,252,0.7)";
+      }
+
+      dayDiv.addEventListener("click", () => selectDate(date));
+      monthGrid.appendChild(dayDiv);
+    }
+  }
+
+  /* SELEÇÃO DE DIA */
+
+  function selectDate(date) {
+    selectedDateObj = new Date(date);
+    selectedDateKey = formatDateKey(selectedDateObj);
+    const data = loadDayData(selectedDateKey) || {};
+
+    const options = { weekday: "long", day: "2-digit", month: "long", year: "numeric" };
+    const formatted = selectedDateObj.toLocaleDateString("pt-BR", options);
+    const cap = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+
+    selectedDateLabel.textContent = cap;
+    selectedDayInfo.textContent = `Registro para ${selectedDateKey}`;
+    summaryDateMini.textContent = selectedDateKey;
+
+    treinoSelect.value = data.treino || "";
+    absSelect.value = data.abs || "";
+    weightInput.value = data.weight || "";
+    notesInput.value = data.notes || "";
+
+    updateSummary(data);
+
+    placeholderDay.style.display = "none";
+    dayForm.style.display = "block";
+  }
+
+  function updateSummary(data) {
+    if (!data || (!data.treino && !data.abs && !data.weight && !data.notes)) {
+      summaryTrain.textContent = "Nenhum treino selecionado ainda.";
+      summaryAbs.textContent = "Nenhum ABS selecionado.";
+      summaryWeight.textContent = "";
+      return;
+    }
+
+    if (data.treino && data.treino !== "Off") {
+      summaryTrain.textContent = `Treino de musculação: ${data.treino}`;
+    } else if (data.treino === "Off") {
+      summaryTrain.textContent = "Dia de descanso (Off).";
+    } else {
+      summaryTrain.textContent = "Treino de musculação não marcado.";
+    }
+
+    if (data.abs) summaryAbs.textContent = `ABS feito: ${data.abs}`;
+    else summaryAbs.textContent = "ABS não marcado.";
+
+    if (data.weight) summaryWeight.textContent = `Peso registrado: ${data.weight} kg`;
+    else summaryWeight.textContent = "";
+  }
+
+  saveDayBtn.addEventListener("click", () => {
+    if (!selectedDateKey) return;
+    const data = {
+      treino: treinoSelect.value || "",
+      abs: absSelect.value || "",
+      weight: weightInput.value || "",
+      notes: notesInput.value || ""
+    };
+    saveDayData(selectedDateKey, data);
+  });
+
+  /* STREAK */
+
+  function updateStreak() {
+    const today = new Date();
+    let streak = 0;
+    for (let offset = 0; ; offset++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - offset);
+      const key = formatDateKey(date);
+      const data = loadDayData(key);
+      if (!data || !data.treino || data.treino === "Off") break;
+      streak++;
+    }
+    streakLabel.textContent =
+      (streak === 1 ? "1 DIA SEGUIDO" : `${streak} DIAS SEGUIDOS`);
+  }
+
+  /* TABS / FICHAS */
+
+  function initTabs() {
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const tab = btn.dataset.tab;
+        if (tab === "musculacao") {
+          tabMusculacao.style.display = "block";
+          tabAbs.style.display = "none";
+        } else {
+          tabMusculacao.style.display = "none";
+          tabAbs.style.display = "block";
+        }
+      });
+    });
+
+    document.querySelectorAll(".train-card[data-train]").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".train-card[data-train]").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        activeMuscleTrain = card.dataset.train;
+        renderMusclePills();
+        muscleExplain.innerHTML =
+          `<div class="exercise-explain-title">${musculacaoExercises[activeMuscleTrain].name}</div>
+           <div>Toque em um exercício acima para ver a explicação rápida.</div>`;
+      });
+    });
+
+    document.querySelectorAll(".train-card[data-abs]").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".train-card[data-abs]").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        activeAbsTrain = card.dataset.abs;
+        renderAbsPills();
+        absExplain.innerHTML =
+          `<div class="exercise-explain-title">${absExercises[activeAbsTrain].name}</div>
+           <div>Toque em um exercício acima para ver a explicação rápida.</div>`;
+      });
+    });
+
+    linkShowMuscle.addEventListener("click", () => {
+      tabButtons.forEach(b => { if (b.dataset.tab === "musculacao") b.click(); });
+    });
+    linkShowAbs.addEventListener("click", () => {
+      tabButtons.forEach(b => { if (b.dataset.tab === "abs") b.click(); });
+    });
+  }
+
+  function renderMusclePills() {
+    musclePills.innerHTML = "";
+    if (!activeMuscleTrain) return;
+    const train = musculacaoExercises[activeMuscleTrain];
+    train.items.forEach((ex, idx) => {
+      const pill = document.createElement("button");
+      pill.type = "button";
+      pill.className = "pill";
+      pill.textContent = `${idx + 1}. ${ex.label}`;
+      pill.addEventListener("click", () => {
+        document.querySelectorAll("#musclePills .pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        muscleExplain.innerHTML =
+          `<div class="exercise-explain-title">${ex.label}</div><div>${ex.explain}</div>`;
+      });
+      musclePills.appendChild(pill);
+    });
+  }
+
+  function renderAbsPills() {
+    absPills.innerHTML = "";
+    if (!activeAbsTrain) return;
+    const train = absExercises[activeAbsTrain];
+    train.items.forEach((ex, idx) => {
+      const pill = document.createElement("button");
+      pill.type = "button";
+      pill.className = "pill";
+      pill.textContent = `${idx + 1}. ${ex.label}`;
+      pill.addEventListener("click", () => {
+        document.querySelectorAll("#absPills .pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        absExplain.innerHTML =
+          `<div class="exercise-explain-title">${ex.label}</div><div>${ex.explain}</div>`;
+      });
+      absPills.appendChild(pill);
+    });
+  }
+
+  /* TOGGLE SEMANAL/MENSAL */
+
+  viewToggleBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      viewToggleBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const view = btn.dataset.view;
+      if (view === "week") {
+        weekView.style.display = "block";
+        monthView.style.display = "none";
+      } else {
+        weekView.style.display = "none";
+        monthView.style.display = "block";
+      }
+    });
+  });
+
+  prevWeekBtn.addEventListener("click", () => {
+    currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+    renderWeek();
+  });
+
+  nextWeekBtn.addEventListener("click", () => {
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    renderWeek();
+  });
+
+  prevMonthBtn.addEventListener("click", () => {
+    currentMonthDate.setMonth(currentMonthDate.getMonth() - 1);
+    renderMonth();
+  });
+
+  nextMonthBtn.addEventListener("click", () => {
+    currentMonthDate.setMonth(currentMonthDate.getMonth() + 1);
+    renderMonth();
+  });
+
+  /* EXPORT MÊS */
+
+  function exportCurrentMonth() {
+    const start = startOfMonth(currentMonthDate);
+    const year = start.getFullYear();
+    const month = start.getMonth();
+    const lastDay = new Date(year, month + 1, 0).getDate();
+
+    const monthNames = [
+      "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+      "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    ];
+    const monthName = monthNames[month];
+
+    let text = "";
+
+    text += `# FICHAS DE MUSCULAÇÃO – ${monthName} ${year}\n\n`;
+    ["A","B","C"].forEach(code => {
+      const t = musculacaoExercises[code];
+      if (!t) return;
+      text += `${t.name}\n`;
+      t.items.forEach((ex, idx) => {
+        text += `${idx + 1}. ${ex.label}\n`;
+      });
+      text += "\n";
+    });
+
+    text += `# FICHAS DE ABDOMINAIS – ${monthName} ${year}\n\n`;
+    ["ABS1","ABS2","ABS3"].forEach(code => {
+      const t = absExercises[code];
+      if (!t) return;
+      text += `${t.name}\n`;
+      t.items.forEach((ex, idx) => {
+        text += `${idx + 1}. ${ex.label}\n`;
+      });
+      text += "\n";
+    });
+
+    text += "# REGISTROS DIÁRIOS\n";
+    text += "Data, Treino, ABS, Peso, Observações\n";
+
+    for (let d = 1; d <= lastDay; d++) {
+      const date = new Date(year, month, d);
+      const key = formatDateKey(date);
+      const data = loadDayData(key);
+      if (!data || (!data.treino && !data.abs && !data.weight && !data.notes)) continue;
+
+      const treino = (data.treino || "").replace(/,/g," ");
+      const abs = (data.abs || "").replace(/,/g," ");
+      const peso = (data.weight || "").replace(/,/g,".");
+      const notes = (data.notes || "").replace(/\r?\n|\r/g," ").replace(/,/g,";");
+
+      text += `${key}, ${treino}, ${abs}, ${peso}, ${notes}\n`;
+    }
+
+    exportText.value = text || "Nenhum registro encontrado para este mês.";
+
+    if (text && text.trim().length > 0 && text !== "Nenhum registro encontrado para este mês.") {
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const mm = String(month + 1).padStart(2,"0");
+      a.href = url;
+      a.download = `treinos-${year}-${mm}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  exportMonthBtn.addEventListener("click", exportCurrentMonth);
+  copyExportBtn.addEventListener("click", () => {
+    exportText.select();
+    document.execCommand("copy");
+  });
+
+  /* TIMER ABS */
+
+  const CIRCUMFERENCE = 2 * Math.PI * 36;
+
+  function updateAbsTimerCircle() {
+    if (!absTimerState.blockTotal || absTimerState.remaining == null) {
+      absTimerCircleProgress.style.strokeDashoffset = CIRCUMFERENCE;
+      return;
+    }
+    const progress = (absTimerState.blockTotal - absTimerState.remaining) / absTimerState.blockTotal;
+    const offset = CIRCUMFERENCE * (1 - progress);
+    absTimerCircleProgress.style.strokeDashoffset = offset;
+  }
+
+  function setCircleColor() {
+    if (absTimerState.isExercise) {
+      absTimerCircleProgress.setAttribute("stroke", "url(#absCircleGradientExercise)");
+    } else {
+      absTimerCircleProgress.setAttribute("stroke", "url(#absCircleGradientRest)");
+    }
+  }
+
+  function updateAbsTimerUI() {
+    const seq = absExercises[absTimerState.currentSeqCode];
+    if (!seq) return;
+
+    // Modo foco visual
+    const tabAbsContent = document.getElementById("tabAbs");
+    if (absTimerState.active || absTimerState.preCountdownActive) {
+      absTimerContainer.classList.add("abs-timer-focus");
+      tabAbsContent.classList.add("abs-focus-active");
+    } else {
+      absTimerContainer.classList.remove("abs-timer-focus");
+      tabAbsContent.classList.remove("abs-focus-active");
+    }
+
+    // Pré-contagem
+    if (absTimerState.preCountdownActive) {
+      absTimerStatusLabel.textContent = "Preparar...";
+      absTimerExercise.textContent = `${absExercises[absTimerState.currentSeqCode].name}`;
+      absTimerPhase.textContent = "Começando em...";
+      absTimerNext.textContent = "Depois: Exercício 1";
+      absTimerTime.textContent = `00:0${absTimerState.preCountdownRemaining}`;
+      absTimerModeLabel.textContent = "PREP";
+      absTimerPauseBtn.disabled = true;
+      absTimerStopBtn.disabled = false;
+      absTimerCircleProgress.style.strokeDashoffset = CIRCUMFERENCE;
+      return;
+    }
+
+    if (!absTimerState.active) {
+      absTimerStatusLabel.textContent = "Pronto para iniciar.";
+      absTimerExercise.textContent = "Selecione a sequência e clique em INICIAR.";
+      absTimerPhase.textContent = "";
+      absTimerNext.textContent = "Próximo: —";
+      absTimerTime.textContent = "00:00";
+      absTimerModeLabel.textContent = "PRONTO";
+      absTimerPauseBtn.disabled = true;
+      absTimerStopBtn.disabled = true;
+      absTimerCircleProgress.style.strokeDashoffset = CIRCUMFERENCE;
+      return;
+    }
+
+    const idx = absTimerState.currentIndex;
+    const isExercise = absTimerState.isExercise;
+    const currentExercise = seq.items[idx];
+
+    if (!currentExercise) {
+      absTimerStatusLabel.textContent = "Sequência concluída!";
+      absTimerExercise.textContent = seq.name;
+      absTimerPhase.textContent = "";
+      absTimerNext.textContent = "Próximo: —";
+      absTimerTime.textContent = "00:00";
+      absTimerModeLabel.textContent = "FINAL";
+      absTimerPauseBtn.disabled = true;
+      absTimerStopBtn.disabled = true;
+      absTimerCircleProgress.style.strokeDashoffset = CIRCUMFERENCE;
+      return;
+    }
+
+    if (isExercise) {
+      absTimerStatusLabel.textContent = seq.name;
+      absTimerExercise.textContent = `${idx + 1}. ${currentExercise.label}`;
+      absTimerPhase.textContent = "Exercício – 45s";
+      absTimerModeLabel.textContent = "EXERCÍCIO";
+    } else {
+      absTimerStatusLabel.textContent = "Descanso";
+      absTimerExercise.textContent = `Entre o ${idx + 1}º e o próximo exercício.`;
+      absTimerPhase.textContent = "Descanso – 15s";
+      absTimerModeLabel.textContent = "DESCANSO";
+    }
+
+    absTimerTime.textContent = formatTime(absTimerState.remaining);
+    const nextIdx = isExercise ? idx : idx + 1;
+    const nextExercise = seq.items[nextIdx];
+    if (nextExercise) {
+      absTimerNext.textContent = `Próximo: ${nextIdx + 1}. ${nextExercise.label}`;
+    } else {
+      absTimerNext.textContent = "Próximo: fim da sequência.";
+    }
+
+    absTimerPauseBtn.disabled = false;
+    absTimerStopBtn.disabled = false;
+    absTimerPauseBtn.textContent = absTimerState.paused ? "RETOMAR" : "PAUSAR";
+
+    setCircleColor();
+    updateAbsTimerCircle();
+  }
+
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  }
+
+  function stopAbsTimer() {
+    clearInterval(absTimerInterval);
+    absTimerInterval = null;
+    absTimerState.active = false;
+    absTimerState.paused = false;
+    absTimerState.currentIndex = 0;
+    absTimerState.isExercise = true;
+    absTimerState.remaining = 0;
+    absTimerState.blockTotal = 0;
+    absTimerState.preCountdownActive = false;
+    absTimerState.preCountdownRemaining = 0;
+    releaseWakeLock();
+    updateAbsTimerUI();
+  }
+
+  function tickAbsTimer() {
+    // Pré-contagem inicial (3,2,1)
+    if (absTimerState.preCountdownActive) {
+      if (absTimerState.preCountdownRemaining > 0) {
+        // play beep 1/2/3 com volumes
+        const val = absTimerState.preCountdownRemaining;
+        if (val === 3) playBeep(1);
+        if (val === 2) playBeep(2);
+        if (val === 1) playBeep(3);
+
+        absTimerState.preCountdownRemaining -= 1;
+        updateAbsTimerUI();
+        return;
+      } else {
+        // Fim da pré-contagem -> começa bloco de exercício
+        absTimerState.preCountdownActive = false;
+        absTimerState.active = true;
+        absTimerState.paused = false;
+        absTimerState.currentIndex = 0;
+        absTimerState.isExercise = true;
+        absTimerState.blockTotal = 45;
+        absTimerState.remaining = 45;
+        playBeep(3); // beep forte de início
+        updateAbsTimerUI();
+        return;
+      }
+    }
+
+    if (!absTimerState.active || absTimerState.paused) return;
+
+    // beep nos últimos 3 segundos de cada bloco
+    if (absTimerState.remaining <= 3 && absTimerState.remaining > 0) {
+      if (absTimerState.remaining === 3) playBeep(1);
+      if (absTimerState.remaining === 2) playBeep(2);
+      if (absTimerState.remaining === 1) playBeep(3);
+    }
+
+    if (absTimerState.remaining > 0) {
+      absTimerState.remaining -= 1;
+      updateAbsTimerUI();
+      return;
+    }
+
+    const seq = absExercises[absTimerState.currentSeqCode];
+    if (!seq) return;
+
+    if (absTimerState.isExercise) {
+      // Fim do exercício -> descanso
+      absTimerState.isExercise = false;
+      absTimerState.blockTotal = 15;
+      absTimerState.remaining = 15;
+      updateAbsTimerUI();
+    } else {
+      // Fim do descanso -> próximo exercício
+      absTimerState.isExercise = true;
+      absTimerState.currentIndex += 1;
+      if (absTimerState.currentIndex >= seq.items.length) {
+        stopAbsTimer();
+        return;
+      }
+      absTimerState.blockTotal = 45;
+      absTimerState.remaining = 45;
+      updateAbsTimerUI();
+    }
+  }
+
+  absTimerStartBtn.addEventListener("click", () => {
+    absTimerState.currentSeqCode = absTimerSelect.value || "ABS1";
+    const seq = absExercises[absTimerState.currentSeqCode];
+    if (!seq) return;
+
+    // Pré-contagem 3,2,1 antes do primeiro exercício
+    absTimerState.preCountdownActive = true;
+    absTimerState.preCountdownRemaining = 3;
+    absTimerState.active = false;
+    absTimerState.paused = false;
+    absTimerState.currentIndex = 0;
+    absTimerState.isExercise = true;
+    absTimerState.blockTotal = 0;
+    absTimerState.remaining = 0;
+
+    clearInterval(absTimerInterval);
+    absTimerInterval = setInterval(tickAbsTimer, 1000);
+
+    requestWakeLock();
+    updateAbsTimerUI();
+  });
+
+  absTimerPauseBtn.addEventListener("click", () => {
+    if (!absTimerState.active) return;
+    absTimerState.paused = !absTimerState.paused;
+    absTimerPauseBtn.textContent = absTimerState.paused ? "RETOMAR" : "PAUSAR";
+  });
+
+  absTimerStopBtn.addEventListener("click", () => {
+    stopAbsTimer();
+  });
+
+  /* INIT */
+
+  function init() {
+    const today = new Date();
+    currentWeekStart = startOfWeek(today);
+    currentMonthDate = startOfMonth(today);
+    renderWeek();
+    renderMonth();
+    updateStreak();
+    initTabs();
+    updateAbsTimerUI();
+  }
+
+  init();
+</script>
+</body>
+</html>
