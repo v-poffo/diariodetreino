@@ -62,7 +62,7 @@
     /* HEADER */
 
     .app-header {
-      padding: 14px 18px 10px;
+      padding: 16px 18px 12px;
       border-bottom: 1px solid #111827;
       display: flex;
       justify-content: space-between;
@@ -74,28 +74,28 @@
     }
 
     .app-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .app-subtitle {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
-      margin-top: 3px;
-      max-width: 480px;
+      margin-top: 4px;
+      max-width: 520px;
     }
 
     .badge-streak {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       background: rgba(5,7,12,0.96);
       border-radius: 999px;
-      padding: 4px 11px;
+      padding: 5px 13px;
       border: 1px solid rgba(212,255,55,0.65);
-      font-size: 10px;
+      font-size: 11px;
       color: #fefce8;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -103,8 +103,8 @@
     }
 
     .flame {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-radius: 999px;
       border: 2px solid var(--accent-neon);
       box-shadow: 0 0 14px rgba(212,255,55,0.9);
@@ -147,7 +147,7 @@
     /* TOGGLE SEMANAL/MENSAL */
 
     .view-tabs {
-      padding: 8px 12px 4px;
+      padding: 10px 12px 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -164,8 +164,8 @@
     }
 
     .toggle-btn {
-      padding: 5px 12px;
-      font-size: 11px;
+      padding: 7px 14px;
+      font-size: 12px;
       border: none;
       background: transparent;
       color: var(--muted);
@@ -189,8 +189,8 @@
       border: 1px solid #262b3c;
       background: linear-gradient(135deg, #020617, #050814);
       color: var(--text);
-      padding: 4px 9px;
-      font-size: 11px;
+      padding: 6px 11px;
+      font-size: 12px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -206,7 +206,7 @@
     /* SEMANA */
 
     .week-header {
-      padding: 4px 12px 4px;
+      padding: 4px 12px 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -214,38 +214,38 @@
     }
 
     .week-label {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
     }
 
     .week-strip {
-      padding: 4px 8px 8px;
+      padding: 4px 8px 10px;
       overflow-x: auto;
     }
 
     .week-days {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       min-width: 100%;
     }
 
     .day-card {
-      flex: 0 0 calc(100%/7 - 4px);
+      flex: 0 0 calc(100%/7 - 6px);
       min-width: 0;
     }
 
     .day-button {
       width: 100%;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid rgba(31,41,55,1);
       background: radial-gradient(circle at top, #111827, #03050d);
       color: #e5e7eb;
-      padding: 6px 6px;
+      padding: 8px 7px;
       cursor: pointer;
       transition: all 0.16s ease;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
       position: relative;
     }
 
@@ -259,30 +259,30 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 3px;
+      gap: 4px;
     }
 
     .day-weekday {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.12em;
     }
 
     .day-number {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
     }
 
     .day-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
+      gap: 4px;
     }
 
     .tag {
-      font-size: 9px;
-      padding: 1px 6px;
+      font-size: 10px;
+      padding: 2px 7px;
       border-radius: 999px;
       border: 1px solid transparent;
       background: #020617;
@@ -297,25 +297,25 @@
     .tag-abs { border-color: rgba(234,179,8,0.95); color: #fef9c3; }
 
     .day-weight {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--muted);
     }
 
     .day-dot {
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
       border-radius: 999px;
       background: var(--accent);
       position: absolute;
-      bottom: 4px;
-      right: 4px;
+      bottom: 5px;
+      right: 5px;
       box-shadow: 0 0 0 1px #020617, 0 0 8px rgba(34,197,94,0.8);
     }
 
     .today-ring {
       position: absolute;
       inset: -1px;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid rgba(248,250,252,0.9);
       box-shadow: 0 0 9px rgba(248,250,252,0.6);
       pointer-events: none;
@@ -324,12 +324,12 @@
     /* MÊS */
 
     .month-view {
-      padding: 4px 10px 8px;
+      padding: 6px 10px 10px;
       display: none;
     }
 
     .month-header {
-      padding: 4px 2px 4px;
+      padding: 4px 2px 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -337,7 +337,7 @@
     }
 
     .month-label {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
     }
 
@@ -345,11 +345,11 @@
       margin-top: 4px;
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 3px;
+      gap: 4px;
     }
 
     .month-weekday {
-      font-size: 9px;
+      font-size: 10px;
       text-align: center;
       color: var(--muted);
       letter-spacing: 0.15em;
@@ -358,12 +358,12 @@
 
     .month-day {
       aspect-ratio: 1/1;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid #111827;
       background: #020308;
-      font-size: 11px;
+      font-size: 12px;
       color: #e5e7eb;
-      padding: 3px;
+      padding: 4px;
       position: relative;
       cursor: pointer;
       display: flex;
@@ -385,11 +385,11 @@
 
     .month-day-number {
       text-align: right;
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .month-day-tags {
-      font-size: 9px;
+      font-size: 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 1px;
@@ -398,15 +398,15 @@
     /* EXPORT */
 
     .export-area {
-      margin-top: 5px;
+      margin-top: 6px;
       border-radius: 12px;
       border: 1px solid #111827;
       background: #020617;
-      padding: 6px;
+      padding: 7px;
     }
 
     .export-area label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
       display: flex;
       justify-content: space-between;
@@ -417,14 +417,14 @@
     .export-text {
       width: 100%;
       margin-top: 4px;
-      min-height: 110px;
+      min-height: 120px;
       resize: vertical;
-      border-radius: 8px;
+      border-radius: 9px;
       border: 1px solid #1f2933;
       background: #020308;
       color: #e5e7eb;
-      font-size: 10px;
-      padding: 6px;
+      font-size: 11px;
+      padding: 7px;
     }
 
     .btn-copy {
@@ -432,8 +432,8 @@
       border: 1px solid rgba(148,163,184,0.8);
       background: rgba(15,23,42,0.9);
       color: #e5e7eb;
-      font-size: 10px;
-      padding: 3px 6px;
+      font-size: 11px;
+      padding: 4px 8px;
       cursor: pointer;
       transition: all 0.15s;
     }
@@ -447,8 +447,8 @@
       border: 1px solid rgba(234,179,8,0.95);
       background: var(--accent-mustard-soft);
       color: #fef9c3;
-      font-size: 10px;
-      padding: 3px 8px;
+      font-size: 11px;
+      padding: 4px 9px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -463,32 +463,32 @@
     /* TABS / FICHAS */
 
     .tabs {
-      padding: 6px 10px 8px;
+      padding: 8px 10px 10px;
       border-top: 1px solid #111827;
       background: radial-gradient(circle at bottom left, #020308 0, #050609 60%);
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
     .tab-buttons {
       display: inline-flex;
       background: rgba(10,16,27,0.96);
       border-radius: 999px;
-      padding: 3px;
+      padding: 4px;
       border: 1px solid #242b3a;
-      gap: 3px;
+      gap: 4px;
       box-shadow: 0 0 0 1px rgba(15,23,42,0.8);
     }
 
     .tab-btn {
-      padding: 4px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
       border: none;
       background: transparent;
       color: var(--muted);
-      font-size: 11px;
+      font-size: 12px;
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
@@ -500,10 +500,10 @@
 
     .tab-content {
       flex: 1;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid #1f2933;
       background: var(--bg-card);
-      padding: 8px 8px;
+      padding: 10px 10px;
       overflow-y: auto;
     }
 
@@ -511,19 +511,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tab-title {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
     .badge-small {
-      font-size: 9px;
-      padding: 1px 6px;
+      font-size: 11px;
+      padding: 2px 8px;
       border-radius: 999px;
       background: rgba(15,23,42,0.9);
       border: 1px solid rgba(55,65,81,1);
@@ -532,22 +532,22 @@
 
     .card-row {
       display: flex;
-      gap: 6px;
-      margin-bottom: 6px;
+      gap: 8px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
     }
 
     .train-card {
       flex: 1 1 0;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid #1f2933;
       background: radial-gradient(circle at top, #111827, #020308);
-      padding: 6px 8px;
-      font-size: 11px;
+      padding: 8px 10px;
+      font-size: 12px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
       transition: all 0.15s;
     }
 
@@ -563,27 +563,27 @@
     }
 
     .train-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
     }
 
     .train-desc {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
     }
 
     .pill-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 4px;
+      gap: 5px;
+      margin-top: 6px;
     }
 
     .pill {
       border-radius: 999px;
       border: 1px solid rgba(55,65,81,1);
-      padding: 3px 7px;
-      font-size: 10px;
+      padding: 4px 9px;
+      font-size: 11px;
       color: var(--muted);
       background: rgba(10,14,23,0.95);
       cursor: pointer;
@@ -603,34 +603,34 @@
     }
 
     .exercise-explain {
-      margin-top: 6px;
-      padding-top: 4px;
+      margin-top: 8px;
+      padding-top: 6px;
       border-top: 1px solid #1f2933;
-      font-size: 10.5px;
+      font-size: 12px;
       color: var(--muted);
-      min-height: 40px;
+      min-height: 48px;
     }
 
     .exercise-explain-title {
       font-weight: 600;
       color: #e5e7eb;
-      margin-bottom: 2px;
-      font-size: 11px;
+      margin-bottom: 3px;
+      font-size: 12px;
     }
 
     /* TIMER ABS – CÍRCULO + MODO FOCO */
 
     .abs-timer {
-      margin-top: 8px;
-      border-radius: 14px;
+      margin-top: 10px;
+      border-radius: 16px;
       border: 1px solid #1f2933;
       background: radial-gradient(circle at top, #020617, #020308);
-      padding: 8px 9px;
-      font-size: 11px;
+      padding: 10px 11px;
+      font-size: 12px;
       color: var(--muted);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
@@ -638,11 +638,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .abs-timer-title {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -654,14 +654,14 @@
       border-radius: 999px;
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 3px 8px;
-      font-size: 10px;
+      padding: 5px 10px;
+      font-size: 12px;
     }
 
     .abs-timer-body {
       display: grid;
       grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       transition: all 0.2s ease;
     }
@@ -674,38 +674,38 @@
     .abs-timer-main {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
 
     .abs-timer-label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
     .abs-timer-exercise {
-      font-size: 12px;
+      font-size: 13px;
       color: #f9fafb;
       font-weight: 500;
     }
 
     .abs-timer-phase {
-      font-size: 10px;
+      font-size: 11px;
       color: #bbf7d0;
     }
 
     .abs-timer-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: flex-start;
     }
 
     .abs-timer-circle {
-      width: 80px;
-      height: 80px;
+      width: 96px;
+      height: 96px;
       position: relative;
       flex-shrink: 0;
       transition: all 0.2s ease;
@@ -728,14 +728,14 @@
 
     .abs-timer-time-main {
       font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       color: #e5fce7;
       text-shadow: 0 0 6px rgba(34,197,94,0.6);
     }
 
     .abs-timer-time-sub {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -744,7 +744,7 @@
     .abs-timer-controls {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .btn-timer {
@@ -752,8 +752,8 @@
       border: 1px solid rgba(34,197,94,0.9);
       background: linear-gradient(135deg, rgba(34,197,94,0.25), rgba(21,128,61,0.35));
       color: #dcfce7;
-      font-size: 11px;
-      padding: 4px 10px;
+      font-size: 12px;
+      padding: 6px 12px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -774,19 +774,19 @@
     }
 
     .abs-timer-next {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
     }
 
     /* MODO FOCO DO TIMER (quando ativo) */
     .abs-timer.abs-timer-focus {
-      padding: 10px 10px;
+      padding: 12px 12px;
       border-width: 1px;
       box-shadow: 0 0 18px rgba(34,197,94,0.4);
     }
 
     .abs-timer.abs-timer-focus .abs-timer-body {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
     }
     @media (max-width: 640px) {
       .abs-timer.abs-timer-focus .abs-timer-body {
@@ -795,16 +795,16 @@
     }
 
     .abs-timer.abs-timer-focus .abs-timer-circle {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
     }
 
     .abs-timer.abs-timer-focus .abs-timer-time-main {
-      font-size: 22px;
+      font-size: 26px;
     }
 
     .abs-timer.abs-timer-focus .abs-timer-exercise {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
     }
 
@@ -820,17 +820,17 @@
     /* COLUNA DIREITA */
 
     .right-col {
-      padding: 10px 12px 12px;
+      padding: 12px 14px 14px;
       background:
         radial-gradient(circle at top right, rgba(34,197,94,0.18), rgba(10,10,18,0.98)),
         radial-gradient(circle at bottom right, rgba(234,88,12,0.16), transparent 55%);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .placeholder-day {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--muted);
       margin-top: 8px;
     }
@@ -838,17 +838,17 @@
     .sidepanel-header {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
       margin-bottom: 2px;
     }
 
     .sidepanel-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
     }
 
     .sidepanel-subtitle {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
     }
 
@@ -856,21 +856,21 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     label {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
     }
 
     select, input[type="number"], textarea {
       background: var(--bg-card-alt);
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 7px 9px;
-      font-size: 12px;
+      padding: 8px 10px;
+      font-size: 13px;
       outline: none;
       width: 100%;
     }
@@ -880,26 +880,26 @@
     }
 
     textarea {
-      min-height: 70px;
+      min-height: 80px;
       resize: vertical;
     }
 
     .small {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
     }
 
     .summary-card {
-      margin-top: 4px;
-      padding: 8px;
-      border-radius: 12px;
+      margin-top: 6px;
+      padding: 9px;
+      border-radius: 14px;
       border: 1px solid #1f2933;
       background: rgba(10,14,23,0.98);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .summary-row {
@@ -912,17 +912,17 @@
     .summary-label {
       font-weight: 500;
       color: #e5e7eb;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .btn-save {
-      margin-top: 4px;
+      margin-top: 6px;
       border-radius: 999px;
       border: 1px solid var(--accent-strong);
       background: linear-gradient(135deg, var(--accent-soft), rgba(21,128,61,0.4));
       color: #dcfce7;
-      font-size: 11px;
-      padding: 5px 11px;
+      font-size: 12px;
+      padding: 7px 13px;
       cursor: pointer;
       align-self: flex-start;
       display: inline-flex;
@@ -939,7 +939,7 @@
     }
 
     .link {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--accent-mustard);
       cursor: pointer;
       text-decoration: underline;
@@ -948,10 +948,45 @@
 
     .footer-note {
       margin-top: auto;
-      font-size: 10px;
+      font-size: 11px;
       color: var(--muted);
     }
-  </style>
+
+    /* MOBILE AJUSTES GERAIS (max-width 480px) */
+    @media (max-width: 480px) {
+      .app {
+        margin: 0;
+        border-radius: 0;
+        border-width: 0;
+      }
+
+      .app-header {
+        padding: 14px 12px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .badge-streak {
+        align-self: flex-start;
+      }
+
+      .tabs {
+        padding: 8px;
+      }
+
+      .tab-content {
+        padding: 9px;
+      }
+
+      .right-col {
+        padding: 10px;
+      }
+
+      .week-strip {
+        padding-bottom: 8px;
+      }
+    }
+</style>
 </head>
 <body>
 <div class="app">
@@ -1217,7 +1252,7 @@
 </div>
 
 <script>
-  /* --- DADOS DE TREINO (iguais aos anteriores, resumidos por espaço) --- */
+  /* --- DADOS DE TREINO --- */
   const musculacaoExercises = {
     A: { name: "Treino A – Peito + Tríceps", items: [
       { label: "Supino reto com barra", explain: "Deita no banco, pés firmes. Mãos um pouco mais largas que os ombros. Desce a barra na altura do peito médio e sobe estendendo sem travar o cotovelo." },
@@ -1239,7 +1274,7 @@
     ]},
     C: { name: "Treino C – Ombro + Glúteos/Posterior", items: [
       { label: "Desenvolvimento com halteres (sentado)", explain: "Sentado, halteres na altura dos ombros. Empurra acima da cabeça e volta até a linha dos ouvidos." },
-      { label: "Elevação lateral com halteres", explain: "Levanta os halteres para as laterais até a altura dos ombros, cotovelos levemente flexionados." },
+      { label: "Elevação lateral com halteres", explain: "Levanta os halteres para as laterais até a altura dos omros, cotovelos levemente flexionados." },
       { label: "Crucifixo inverso", explain: "Peck deck ou halteres, abre braços para trás focando manguito posterior." },
       { label: "Mesa flexora", explain: "De bruços na máquina, flexiona joelhos trazendo calcanhares aos glúteos." },
       { label: "Terra romeno", explain: "Barra/halter, joelhos levemente flexionados, quadril vai para trás, costas retas." },
@@ -1397,6 +1432,7 @@
 
   // Som: único beep com volume graduado
   const beepAudio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+
   function playBeep(level) {
     // level: 1 (50%), 2 (75%), 3 (100%)
     let vol = level === 1 ? 0.5 : level === 2 ? 0.75 : 1.0;
@@ -1404,10 +1440,12 @@
     try {
       beepAudio.currentTime = 0;
       beepAudio.play();
-    } catch(e) {}
+    } catch(e) {
+      console.log("Falha ao tocar beep:", e);
+    }
   }
 
-  /* DATA HELPERS */
+  /* HELPERS DE DATA */
 
   function startOfWeek(date) {
     const d = new Date(date);
@@ -1924,7 +1962,6 @@
     const seq = absExercises[absTimerState.currentSeqCode];
     if (!seq) return;
 
-    // Modo foco visual
     const tabAbsContent = document.getElementById("tabAbs");
     if (absTimerState.active || absTimerState.preCountdownActive) {
       absTimerContainer.classList.add("abs-timer-focus");
@@ -1934,10 +1971,9 @@
       tabAbsContent.classList.remove("abs-focus-active");
     }
 
-    // Pré-contagem
     if (absTimerState.preCountdownActive) {
       absTimerStatusLabel.textContent = "Preparar...";
-      absTimerExercise.textContent = `${absExercises[absTimerState.currentSeqCode].name}`;
+      absTimerExercise.textContent = `${seq.name}`;
       absTimerPhase.textContent = "Começando em...";
       absTimerNext.textContent = "Depois: Exercício 1";
       absTimerTime.textContent = `00:0${absTimerState.preCountdownRemaining}`;
@@ -2032,7 +2068,6 @@
     // Pré-contagem inicial (3,2,1)
     if (absTimerState.preCountdownActive) {
       if (absTimerState.preCountdownRemaining > 0) {
-        // play beep 1/2/3 com volumes
         const val = absTimerState.preCountdownRemaining;
         if (val === 3) playBeep(1);
         if (val === 2) playBeep(2);
@@ -2042,7 +2077,6 @@
         updateAbsTimerUI();
         return;
       } else {
-        // Fim da pré-contagem -> começa bloco de exercício
         absTimerState.preCountdownActive = false;
         absTimerState.active = true;
         absTimerState.paused = false;
@@ -2050,7 +2084,7 @@
         absTimerState.isExercise = true;
         absTimerState.blockTotal = 45;
         absTimerState.remaining = 45;
-        playBeep(3); // beep forte de início
+        playBeep(3); // início do primeiro exercício
         updateAbsTimerUI();
         return;
       }
@@ -2094,12 +2128,22 @@
     }
   }
 
+  // CLique no botão iniciar: "desbloqueia" áudio no iOS com um play direto
   absTimerStartBtn.addEventListener("click", () => {
     absTimerState.currentSeqCode = absTimerSelect.value || "ABS1";
     const seq = absExercises[absTimerState.currentSeqCode];
     if (!seq) return;
 
-    // Pré-contagem 3,2,1 antes do primeiro exercício
+    // tentativa de desbloqueio imediato de áudio
+    try {
+      beepAudio.volume = 1.0;
+      beepAudio.currentTime = 0;
+      beepAudio.play();
+    } catch(e) {
+      console.log("Falha ao tocar beep no clique inicial:", e);
+    }
+
+    // Pré-contagem 3,2,1...
     absTimerState.preCountdownActive = true;
     absTimerState.preCountdownRemaining = 3;
     absTimerState.active = false;
